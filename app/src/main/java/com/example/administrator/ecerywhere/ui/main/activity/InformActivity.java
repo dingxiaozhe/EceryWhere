@@ -62,4 +62,9 @@ public class InformActivity extends BaseActivity<InformationView,InformationPres
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void toastShort(String msg) {
+
+    }
 }

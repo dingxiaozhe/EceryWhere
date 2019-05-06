@@ -72,4 +72,9 @@ public class NotificationActivity extends BaseActivity<InformationView,Informati
             }
         });
     }
+
+    @Override
+    public void toastShort(String msg) {
+
+    }
 }

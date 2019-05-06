@@ -10,4 +10,6 @@ public interface BaseMvpView {
     void showLoading();
     //隐藏加载loading的方法
     void hideLoading();
+    void toastShort(String msg);
+
 }

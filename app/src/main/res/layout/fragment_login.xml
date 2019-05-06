@@ -188,22 +188,12 @@
     android:id="@+id/tv5"
     android:layout_below="@id/tv_wch"
     android:layout_marginTop="@dimen/dp_66"
-    android:layout_width="@dimen/dp_157"
+    android:layout_width="@dimen/dp_209"
     android:layout_height="@dimen/dp_18"
     android:layout_marginLeft="@dimen/dp_83"
-    android:text="登录或注册即同意楼舒旅行"
+    android:text="@string/agree_protocol"
     android:textSize="@dimen/sp_13"
     android:textColor="@color/c_999999"
     />
-    <TextView
-        android:id="@+id/tv6"
-        android:layout_toRightOf="@id/tv5"
-        android:layout_below="@id/tv_wch"
-        android:layout_width="@dimen/dp_52"
-        android:layout_height="@dimen/dp_18"
-        android:text="用户协议"
-        android:layout_marginTop="@dimen/dp_66"
-        android:textSize="@dimen/sp_13"
-        android:textColor="@color/c_FA6A13"
-        />
+
 </RelativeLayout>

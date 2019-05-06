@@ -4,13 +4,22 @@ package com.example.administrator.ecerywhere.ui.main.fragment;
 import android.annotation.SuppressLint;
 
 
+import android.app.Activity;
+import android.support.design.internal.ForegroundLinearLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
-import android.text.Html;
+
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +32,9 @@ import android.widget.Toast;
 import com.example.administrator.ecerywhere.R;
 import com.example.administrator.ecerywhere.base.BaseFragment;
 import com.example.administrator.ecerywhere.presenter.main.LoginFragmentPresenter;
+import com.example.administrator.ecerywhere.ui.main.activity.MainActivity;
+import com.example.administrator.ecerywhere.ui.main.activity.WebViewActivity;
+import com.example.administrator.ecerywhere.util.ToastUtil;
 import com.example.administrator.ecerywhere.view.main.LoginFragmentView;
 
 import com.umeng.socialize.UMAuthListener;
@@ -62,8 +74,8 @@ public class LoginFragment extends BaseFragment<LoginFragmentView,LoginFragmentP
     ImageView mIvQq;
     @BindView(R.id.iv_sina)
     ImageView mIvSina;
-    @BindView(R.id.tv6)
-    TextView tv6;
+    @BindView(R.id.tv5)
+    TextView tv5;
 
 
     private static final String TAG = "LoginFragment";
@@ -80,10 +92,32 @@ public class LoginFragment extends BaseFragment<LoginFragmentView,LoginFragmentP
         return R.layout.fragment_login;
     }
 
+
     @Override
     protected void initView() {
-        tv6.setText(Html.fromHtml("<u>"+"用户协议"+"<u/>"));
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getResources().getString(R.string.agree_protocol));
+       //点击事件
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                //ToastUtil.showShort("点击");
+                WebViewActivity.startAct(getActivity());
+            }
+        };
+        spannableStringBuilder.setSpan(clickableSpan,12,16, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        //下划线
+        UnderlineSpan underlineSpan = new UnderlineSpan();
+        spannableStringBuilder.setSpan(underlineSpan,12,16,Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        //文本yanse
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.c_FA6A13));
+        spannableStringBuilder.setSpan(foregroundColorSpan,12,16,Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        //需要设置这个ClickableSpan才会有效果
+        tv5.setMovementMethod(LinkMovementMethod.getInstance());
+        tv5.setText(spannableStringBuilder);
+
     }
+
+
 
 
 
@@ -94,13 +128,13 @@ public class LoginFragment extends BaseFragment<LoginFragmentView,LoginFragmentP
     public  void onClick(View v){
         switch (v.getId()) {
             case R.id.iv_wechat:
-                login(SHARE_MEDIA.WEIXIN);
+                mPresenter.oauthLogin(SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.iv_qq:
-                login(SHARE_MEDIA.QQ);
+              mPresenter.oauthLogin(SHARE_MEDIA.QQ);
                 break;
             case R.id.iv_sina:
-                login(SHARE_MEDIA.SINA);
+                mPresenter.oauthLogin(SHARE_MEDIA.SINA);
                 break;
 
             case R.id.btn_send_verify:
@@ -116,8 +150,8 @@ public class LoginFragment extends BaseFragment<LoginFragmentView,LoginFragmentP
         }
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
-        //添加会回退栈
-        fragmentTransaction.addToBackStack(null);
+        //添加回退栈
+        //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.add(R.id.fl_container,new VerifyFragment()).commit();
     }
 
@@ -158,60 +192,21 @@ public class LoginFragment extends BaseFragment<LoginFragmentView,LoginFragmentP
         return mEtPhone.getText().toString().trim();
     }
 
-    private void login(SHARE_MEDIA type) {
-        UMShareAPI umShareAPI = UMShareAPI.get(getContext());
-        umShareAPI.getPlatformInfo(getActivity(), type, umAuthListener);
+    @Override
+    public Activity getAct() {
+
+        return getActivity();
     }
 
-    UMAuthListener umAuthListener = new UMAuthListener() {
-        /**
-         * @desc 授权开始的回调
-         * @param platform 平台名称
-         */
-        @Override
-        public void onStart(SHARE_MEDIA platform) {
+    @Override
+    public void go2MainActivity() {
+        MainActivity.startAct(getContext());
 
-        }
-
-        /**
-         * @desc 授权成功的回调
-         * @param platform 平台名称
-         * @param action 行为序号，开发者用不上
-         * @param data 用户资料返回
-         */
-        @Override
-        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            for (Map.Entry<String,String> entry:data.entrySet()){
-                String key = entry.getKey();
-                String value = entry.getValue();
-                Log.d(TAG, "key: "+key+",value:"+value);
-            }
-            Toast.makeText(getContext(), "成功了", Toast.LENGTH_LONG).show();
-        }
-
-        /**
-         * @desc 授权失败的回调
-         * @param platform 平台名称
-         * @param action 行为序号，开发者用不上
-         * @param t 错误原因
-         */
-        @Override
-        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-
-            Toast.makeText(getContext(), "失败：" + t.getMessage(),
-                    Toast.LENGTH_LONG).show();
-        }
-
-        /**
-         * @desc 授权取消的回调
-         * @param platform 平台名称
-         * @param action 行为序号，开发者用不上
-         */
-        @Override
-        public void onCancel(SHARE_MEDIA platform, int action) {
-            Toast.makeText(getContext(), "取消了", Toast.LENGTH_LONG).show();
-        }
-    };
+    }
 
 
+    @Override
+    public void toastShort(String msg) {
+
+    }
 }

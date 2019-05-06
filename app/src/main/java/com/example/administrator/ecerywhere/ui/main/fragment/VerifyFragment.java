@@ -1,30 +1,33 @@
 package com.example.administrator.ecerywhere.ui.main.fragment;
 
 
-import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.administrator.ecerywhere.R;
 import com.example.administrator.ecerywhere.base.BaseFragment;
 import com.example.administrator.ecerywhere.presenter.main.VerifyPresenter;
 import com.example.administrator.ecerywhere.view.main.VerifyView;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VerifyFragment extends BaseFragment<VerifyView,VerifyPresenter> implements VerifyView {
+public class VerifyFragment extends BaseFragment<VerifyView, VerifyPresenter> implements VerifyView {
+
+
+    @BindView(R.id.img_back)
+    ImageView mImgBack;
 
 
     public VerifyFragment() {
@@ -43,10 +46,19 @@ public class VerifyFragment extends BaseFragment<VerifyView,VerifyPresenter> imp
         return R.layout.fragment_verify;
     }
 
+    @OnClick(R.id.img_back)
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_back:
+                FragmentManager manager =getActivity().getSupportFragmentManager();
+                manager.beginTransaction().addToBackStack(null).add(R.id.fl_container,new LoginFragment()).commit();
+                break;
+        }
+    }
 
 
+    @Override
+    public void toastShort(String msg) {
 
-
-
-
+    }
 }

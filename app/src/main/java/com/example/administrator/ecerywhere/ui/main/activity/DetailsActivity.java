@@ -55,4 +55,8 @@ public class DetailsActivity extends BaseActivity<InformationView,InformationPre
         finish();
     }
 
+    @Override
+    public void toastShort(String msg) {
+
+    }
 }

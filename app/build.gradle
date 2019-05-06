@@ -24,10 +24,16 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
+            storeFile file('everywhere.jks')
+            storePassword "123456"
+            keyAlias "everywhere"
+            keyPassword "123456"
+        }
+        release {
+            storeFile file('everywhere.jks')
+            storePassword "123456"
+            keyAlias "everywhere"
+            keyPassword "123456"
         }
     }
 }
@@ -91,4 +97,7 @@ dependencies {
     //SmartRefreshLayout
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7'
+
+    api 'com.just.agentweb:agentweb:4.0.3-alpha@aar' // (必选)
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
 }

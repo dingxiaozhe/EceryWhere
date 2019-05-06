@@ -71,4 +71,9 @@ public class MessageActivity extends BaseActivity<InformationView,InformationPre
         });
 
     }
+
+    @Override
+    public void toastShort(String msg) {
+
+    }
 }

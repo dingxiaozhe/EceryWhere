@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.activity.MainActivity"
+    android:background="@color/c_white">
+
+    <android.support.v7.widget.Toolbar
+        android:background="@color/c_FEFEFE"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_72">
+    <ImageView
+        android:id="@+id/img_ca"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_25"/>
+    
+    <ImageView
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_16"
+        android:src="@mipmap/message"
+        android:layout_marginLeft="@dimen/dp_277"
+        android:layout_marginTop="@dimen/dp_30.5"/>
+    </android.support.v7.widget.Toolbar>
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:background="@color/c_f5f5f5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <RadioButton
+            android:id="@+id/home"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/img_selecter"
+            android:textColor="@drawable/te_selecter"
+            android:text="@string/home"
+            android:textSize="@dimen/sp_11"
+            android:button="@null"
+            android:layout_marginLeft="@dimen/dp_99"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/banmi"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/img_rice"
+            android:textColor="@drawable/te_selecter"
+            android:textSize="@dimen/sp_11"
+            android:text="@string/app_rice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_132"
+            android:button="@null"/>
+    </RadioGroup>
+<android.support.v4.view.ViewPager
+    android:layout_below="@id/toolbar"
+    android:layout_above="@id/radiogroup"
+    android:id="@+id/viewpager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+</RelativeLayout>
